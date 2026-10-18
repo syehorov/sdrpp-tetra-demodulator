@@ -31,10 +31,12 @@ file(GLOB SRC LIST_DIRECTORIES false
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native")
 
 if (NOT SDRPP_MODULE_CMAKE)
-    set(SDRPP_MODULE_CMAKE "/usr/share/cmake/Modules/sdrpp_module.cmake")
+    set(SDRPP_MODULE_CMAKE "/usr/lib/cmake/sdrpp/sdrpp_module.cmake")
 endif ()
 
 
 include(${SDRPP_MODULE_CMAKE})
-
+find_package(nlohmann_json 3.10.5 REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
+target_include_directories(${PROJECT_NAME} PRIVATE "/usr/include/nlohmann")
 target_include_directories(tetra_demodulator PRIVATE BEFORE "src/" "src/decoder/src" "src/decoder/codec" )
